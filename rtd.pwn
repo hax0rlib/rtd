@@ -34,8 +34,12 @@
  * Definições do Sistema
  * @define MAX_MEMBROS_BOCA Máximo de membros na boca
  * @define MONEY_BOCA Dinheiro que inicia na Boca
+ * @define RTD: criar automaticamente public's e forwards com RTD:FunctionName()
+ * @define SCM Abreviação para SendClientMessage
  */
-
+ 
+#define RTD:%0(%1) forward %0(%1); \ public %0(%1)
+#define SCM SendClientMessage
 #define MAX_MEMBROS_BOCA (30)
 #define MONEY_BOCA (10000000)
 
@@ -55,7 +59,7 @@ new Cargo [4] =
 	"Campana",
 	"Traficante",
 	"Gerente",
-	"Patrão"
+	"Dono da Boca",
 ];
 
 /**
@@ -63,7 +67,9 @@ new Cargo [4] =
  * @function verificaOrg
  * @require O Player tem que ser do PCC ou C.V
  */
-stock verificaOrg() {
+ 
+RTD:verificaOrg(); // Forward
+RTD:verificaOrg() {
 
 	if(pInfo[playerid][Logado] == 1) {
 		if()
@@ -72,17 +78,17 @@ stock verificaOrg() {
 	}
 }
 
+RTD:loadIniMsg(); // Forward
+RTD:loadIniMsg() {
 
-stock loadIniMsg() {
-
-	INI_Create("messages")
+	INI_Create("messages");
 
 	if(fexists(#messages.ini)) {
 
-		INI_Open("messages")
-		INI_WriteString("messages", Cargo[0], "- Você agora é um Fogueteiro ! para saber mais sobre sua função digite /ajudaboca")
-		INI_WriteString("messages", Cargo[1], "- Você agora é um Fogueteiro ! para saber mais sobre sua função digite /ajudaboca")
-		INI_WriteString("messages", Cargo[2], "- Você agora é um Fogueteiro ! para saber mais sobre sua função digite /ajudaboca")
+		INI_Open("messages");
+		INI_WriteString("messages", Cargo[0], "- Você agora é um Fogueteiro ! para saber mais sobre sua função digite /ajudaboca");
+		INI_WriteString("messages", Cargo[1], "- Você agora é um Fogueteiro ! para saber mais sobre sua função digite /ajudaboca");
+		INI_WriteString("messages", Cargo[2], "- Você agora é um Fogueteiro ! para saber mais sobre sua função digite /ajudaboca");
 
 		return 1;
 	}
@@ -96,7 +102,7 @@ public OnDialogResponse(playerid, dialogid, response, listintem, inputtext[]) {
 		switch(dialogid) {
 		 case 1:
 		 {
-		 	SendClientMessage()
+		 	SCM();
 		 }
 		}
 	}
