@@ -53,14 +53,14 @@ public OnFilterScriptInit() {
  * Cargo definidos para membros da biqueira
  */
 
-new Cargo [4] = 
-[
-	"Fogueteiro",
-	"Campana",
-	"Traficante",
-	"Gerente",
-	"Dono da Boca",
-];
+new Cargo [5][] = 
+{
+	{"Fogueteiro"},
+	{"Campana"},
+	{"Traficante"},
+	{"Gerente"},
+	{"Dono da Boca"}
+};
 
 /**
  * Função que verifica organização do player
@@ -102,7 +102,7 @@ public OnDialogResponse(playerid, dialogid, response, listintem, inputtext[]) {
 		switch(dialogid) {
 		 case 1:
 		 {
-		 	SCM();
+		 	SCM(playerid, COLOR_GREEN, INI_ReadString("message.ini", Cargo[0]));
 		 }
 		}
 	}
