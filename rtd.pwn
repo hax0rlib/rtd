@@ -87,8 +87,8 @@ new Cargo [5][] =
  * @require O Player tem que ser do PCC ou C.V
  */
  
-RTD:verificaOrg(); // Forward
-RTD:verificaOrg() {
+
+stock verificaOrg() {
 
 	if(gPlayerLogged[i] == 1) {
 		if(orgid == 21 || orgid == 23) {
@@ -107,8 +107,8 @@ RTD:verificaOrg() {
 	}
 }
 
-RTD:loadIniMsg(); // Forward
-RTD:loadIniMsg() {
+
+stock loadIniMsg() {
 
 	INI_Create("messages");
 
