@@ -1,8 +1,8 @@
 /**
- * ______  _____  _____ 
+ * ______  _____  _____
  * | ___ \|_   _||  __ \
  * | |_/ /  | |  | |  \/
- * |    /   | |  | | __ 
+ * |    /   | |  | | __
  * | |\ \   | |  | |_\ \
  * \_| \_|  \_/   \____/
  *
@@ -11,7 +11,7 @@
  * @developers Hax0rlib and Tigz
  * @since 18/04/2016
  * @version 1.2a
- * @logs Otimização | Realizada com sucesso | Script 20% concluido                    
+ * @logs Otimização | Realizada com sucesso | Script 20% concluido
  */
 
 /**
@@ -61,8 +61,8 @@ public OnFilterScriptExit()
  * @define RTD: criar automaticamente public's e forwards com RTD:FunctionName()
  * @define SCM Abreviação para SendClientMessage
  */
- 
-#define RTD:%0(%1) forward %0(%1); \ public %0(%1);
+
+#define RTD::%0(%1) forward %0(%1); \ public %0(%1)
 #define SCM SendClientMessage
 #define MAX_MEMBROS_BOCA (30)
 #define MONEY_BOCA (10000000)
@@ -72,7 +72,7 @@ public OnFilterScriptExit()
  * Cargo definidos para membros da biqueira
  */
 
-new Cargo [5][] = 
+new Cargo [5][] =
 {
 	{"Fogueteiro"},
 	{"Campana"},
@@ -86,24 +86,24 @@ new Cargo [5][] =
  * @function verificaOrg
  * @require O Player tem que ser do PCC ou C.V
  */
- 
+
 
 stock verificaOrg() {
 
 	if(gPlayerLogged[i] == 1) {
 		if(orgid == 21 || orgid == 23) {
-			
+
 			SCM(playerid, COLOR_GREEN, "ORG Aprovada - Carregando ...");
 			return 1;
 		} else {
-		
+
 			SCM(playerid, COLOR_RED, "Você, não é do P.C.C ou C.V");
 			return 0;
 		}
-		
+
 	} else {
-	
-		SCM(playerid, COLOR_RED, "Você não está logado.");	
+
+		SCM(playerid, COLOR_RED, "Você não está logado.");
 	}
 }
 
@@ -112,7 +112,7 @@ stock loadIniMsg() {
 
 	INI_Create("messages");
 
-	if(fexists(#messages.ini)) {
+	if(fexist(#messages.ini)) {
 
 		INI_Open("messages.ini");
 		INI_WriteString("messages", Cargo[0], "- Você agora é um Fogueteiro ! para saber mais sobre sua função digite /ajudaboca");
@@ -123,24 +123,25 @@ stock loadIniMsg() {
 
 		return 1;
 	}
-
+	return 1;
 
 }
 
-public OnDialogResponse(playerid, dialogid, response, listintem, inputtext[]) {
+public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
+{
 	if(response) {
 		switch(dialogid) {
 		 case 1:
 		 {
-		 	SCM(playerid, COLOR_GREEN, INI_Open("message.ini", INI_ReadString("message.ini", Cargo[0])));
+		 	SCM(playerid, COLOR_GREEN, INI_ReadString("message.ini", Cargo[0]));
 		 }
 		 case 2:
 		 {
-		 	SCM(playerid, COLOR_GREEN, INI_Open("message.ini", INI_ReadString("message.ini", Cargo[1])));
+		 	SCM(playerid, COLOR_GREEN, INI_ReadString("message.ini", Cargo[1]));
 		 }
 		 case 3:
 		 {
-		 	SCM(playerid, COLOR_GREEN, INI_Open("message.ini", INI_ReadString("message.ini", Cargo[2])));
+		 	SCM(playerid, COLOR_GREEN, INI_ReadString("message.ini", Cargo[2]));
 		 }
 		}
 	}
@@ -154,51 +155,5 @@ public OnCommandCalled(playerid, params[]){
 		return 1;
 	}
 
-	get_cmd_params(radim) {
-
-		if(IsPlayerConnected(playerid)) {
-
-        	GetPlayerName(playerid, sendername, sizeof(sendername));
-		    if(PlayerInfo[playerid][pCalado] == 1)
-			{
-				SendClientMessage(playerid, TEAM_CYAN_COLOR, "Você não pode falar, pois foi calado");
-				return 1;
-			}
-
-			new length = strlen(cmdtext);
-			while ((idx < length) && (cmdtext[idx] <= ' '))
-			{
-				idx++;
-			}
-
-			new offset = idx;
-			new result[64];
-			while ((idx < length) && ((idx - offset) < (sizeof(result) - 1)))
-			{
-				result[idx - offset] = cmdtext[idx];
-				idx++;
-			}
-
-			result[idx - offset] = EOS;
-			if(!strlen(result))
-			{
-				SendClientMessage(playerid, COLOR_GRAD2, "USE: (/r)adio [radio chat]");
-				return 1;
-			}
-
-			if(Cargo[5][] == 3 || Cargo[5][] == 4)
-			{
-				if(Cargo[5][] == 4) { format(string, sizeof(string), "** Patrão %s: %s, Na Escuta. **", sendername, result); }
-				else if(Cargo[5][] == 3) { format(string, sizeof(string), "** Gerente %s: %s, Na Escuta. **", sendername, result); }
-				else if(Cargo[5][] == 2) { format(string, sizeof(string), "** Traficante %s: %s, Na Escuta. **", sendername, result); }
-				else if(Cargo[5][] == 1) { format(string, sizeof(string), "** Campana %s: %s, Na Escuta. **", sendername, result); }
-				else if(Cargo[5][] == 0) { format(string, sizeof(string), "** Fogueteiro %s: %s, Na Escuta. **", sendername, result); }
-				SendRadioMessage(1,COP_COLOR,string);
-				format(string, sizeof(string), "[Rádio] %s: %s.", sendername, result);
-				ProxDetector(20.0, playerid, string,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
-				printf("%s", string);
-				return 1;
-			}
-	}
 	return 1;
 }
